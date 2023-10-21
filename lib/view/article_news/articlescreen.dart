@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:webview_flutter/webview_flutter.dart';
 
 class ArticleScreen extends StatefulWidget {
   const ArticleScreen({super.key});
@@ -10,6 +11,8 @@ class ArticleScreen extends StatefulWidget {
 class _ArticleScreenState extends State<ArticleScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+        //  child: WebView(),
+        );
   }
 }
