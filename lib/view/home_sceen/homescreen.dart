@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:news_api/helpers/category_images.dart';
 import 'package:news_api/model/article_model.dart/articlemodel.dart';
 import 'package:news_api/model/category_model.dart/categorymodel.dart';
-import 'package:news_api/services/news_services.dart';
+import 'package:news_api/services/article_news.dart';
 import 'package:news_api/view/home_sceen/widget/widget.dart';
 
 class HomeScreen extends StatefulWidget {
