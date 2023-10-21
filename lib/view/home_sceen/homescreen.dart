@@ -90,10 +90,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: articles.length,
                         itemBuilder: (context, index) {
                           return BlogTile(
-                              imageUrl: articles[index].urlToImage.toString(),
-                              title: articles[index].title.toString(),
-                              description:
-                                  articles[index].description.toString());
+                            imageUrl: articles[index].urlToImage.toString(),
+                            title: articles[index].title.toString(),
+                            description: articles[index].description.toString(),
+                            url: articles[index].url.toString(),
+                          );
                         },
                       ),
                     )

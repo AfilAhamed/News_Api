@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:news_api/view/article_news/articlescreen.dart';
 
 class CategoryTile extends StatelessWidget {
   const CategoryTile({super.key, this.imageUrl, this.categoryName});
@@ -51,36 +52,46 @@ class BlogTile extends StatelessWidget {
       {super.key,
       required this.imageUrl,
       required this.title,
-      required this.description});
+      required this.description,
+      required this.url});
 
-  final String imageUrl, title, description;
+  final String imageUrl, title, description, url;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 16),
-      child: Column(
-        children: [
-          ClipRRect(
-              borderRadius: BorderRadius.circular(6),
-              child: Image.network(imageUrl)),
-          SizedBox(
-            height: 2,
-          ),
-          Text(
-            title,
-            style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 17,
-                color: Colors.black87),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Text(
-            description,
-            style: TextStyle(color: Colors.black54),
-          )
-        ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ArticleScreen(blogUrl: url),
+            ));
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: 16),
+        child: Column(
+          children: [
+            ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: Image.network(imageUrl)),
+            SizedBox(
+              height: 2,
+            ),
+            Text(
+              title,
+              style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 17,
+                  color: Colors.black87),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Text(
+              description,
+              style: TextStyle(color: Colors.black54),
+            )
+          ],
+        ),
       ),
     );
   }
