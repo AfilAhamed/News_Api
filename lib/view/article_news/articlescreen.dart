@@ -1,21 +1,15 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-//import 'package:webview_flutter/webview_flutter.dart';
 
-class ArticleScreen extends StatefulWidget {
-  const ArticleScreen({super.key, required this.blogUrl});
+class ArticleScreen extends StatelessWidget {
+  ArticleScreen({super.key, required this.blogUrl});
 
   final String blogUrl;
 
-  @override
-  State<ArticleScreen> createState() => _ArticleScreenState();
-}
-
-class _ArticleScreenState extends State<ArticleScreen> {
   final Completer<WebViewController> _completer =
       Completer<WebViewController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +32,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
       ),
       body: Container(
         child: WebView(
-          initialUrl: widget.blogUrl,
+          initialUrl: blogUrl,
           onWebViewCreated: (controller) {
             _completer.complete(controller);
           },

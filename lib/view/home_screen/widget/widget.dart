@@ -4,9 +4,10 @@ import 'package:news_api/view/article_news/articlescreen.dart';
 import 'package:news_api/view/category_news/categoryscreen.dart';
 
 class CategoryTile extends StatelessWidget {
-  const CategoryTile({super.key, this.imageUrl, this.categoryName});
+  final String imageUrl, categoryName;
 
-  final imageUrl, categoryName;
+  const CategoryTile(
+      {super.key, required this.imageUrl, required this.categoryName});
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +17,11 @@ class CategoryTile extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => CategoryScreen(
-                  category: categoryName.toString().toLowerCase()),
+                  categorys: categoryName.toString().toLowerCase()),
             ));
       },
       child: Container(
-        margin: EdgeInsets.only(right: 16),
+        margin: const EdgeInsets.only(right: 16),
         child: Stack(
           children: [
             ClipRRect(
@@ -42,7 +43,7 @@ class CategoryTile extends StatelessWidget {
               height: 60,
               child: Text(
                 categoryName,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.white,
                     fontSize: 14,
                     fontWeight: FontWeight.w500),
@@ -75,28 +76,28 @@ class BlogTile extends StatelessWidget {
             ));
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: 16),
+        margin: const EdgeInsets.only(bottom: 16),
         child: Column(
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(6),
                 child: Image.network(imageUrl)),
-            SizedBox(
+            const SizedBox(
               height: 2,
             ),
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 17,
                   color: Colors.black87),
             ),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
             Text(
               description,
-              style: TextStyle(color: Colors.black54),
+              style: const TextStyle(color: Colors.black54),
             )
           ],
         ),

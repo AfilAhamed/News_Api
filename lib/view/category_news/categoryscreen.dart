@@ -1,40 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:news_api/helpers/category_images.dart';
+import 'package:news_api/controller/categorycontroller.dart';
+import 'package:provider/provider.dart';
 
-import '../../model/article_model.dart/articlemodel.dart';
-import '../../services/category_new.dart';
-import '../home_sceen/widget/widget.dart';
+import '../home_screen/widget/widget.dart';
 
 class CategoryScreen extends StatefulWidget {
-  final String category;
-  const CategoryScreen({super.key, required this.category});
+  final String categorys;
+
+  const CategoryScreen({
+    super.key,
+    required this.categorys,
+  });
 
   @override
   State<CategoryScreen> createState() => _CategoryScreenState();
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  bool _loading = true;
-
-  List<ArticleModel> articlnews = [];
-
-  getCategoryNews() async {
-    CategoryNews newsServices = CategoryNews();
-    await newsServices.getNewss(widget.category);
-    articlnews = newsServices.news;
-    setState(() {
-      _loading = false;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    getCategoryNews();
+    final provider = Provider.of<CategoryController>(context, listen: false);
+    provider.getCategoryNews(widget.categorys);
   }
 
   @override
   Widget build(BuildContext context) {
+    final categoryProvider = Provider.of<CategoryController>(context);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -53,10 +46,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
           )
         ])),
       ),
-      body: _loading
+      body: categoryProvider.loading
           ? Center(
               child: Container(
-                child: CircularProgressIndicator(),
+                child: const CircularProgressIndicator(),
               ),
             ) //categories
           : SingleChildScrollView(
@@ -64,21 +57,25 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 child: Column(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(bottom: 16),
+                      margin: const EdgeInsets.only(bottom: 16),
                       child: Column(
                         children: [
                           ListView.builder(
-                            physics: ClampingScrollPhysics(),
+                            physics: const ClampingScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: articlnews.length,
+                            itemCount: categoryProvider.articlnews.length,
                             itemBuilder: (context, index) {
                               return BlogTile(
-                                imageUrl:
-                                    articlnews[index].urlToImage.toString(),
-                                title: articlnews[index].title.toString(),
-                                description:
-                                    articlnews[index].description.toString(),
-                                url: articlnews[index].url.toString(),
+                                imageUrl: categoryProvider
+                                    .articlnews[index].urlToImage
+                                    .toString(),
+                                title: categoryProvider.articlnews[index].title
+                                    .toString(),
+                                description: categoryProvider
+                                    .articlnews[index].description
+                                    .toString(),
+                                url: categoryProvider.articlnews[index].url
+                                    .toString(),
                               );
                             },
                           ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:news_api/controller/homescreencontroller.dart';
 import 'package:news_api/helpers/category_images.dart';
-import 'package:news_api/model/article_model.dart/articlemodel.dart';
-import 'package:news_api/model/category_model.dart/categorymodel.dart';
-import 'package:news_api/services/article_news.dart';
-import 'package:news_api/view/home_sceen/widget/widget.dart';
+
+import 'package:news_api/view/home_screen/widget/widget.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,30 +13,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<CategoryModel> categoriess = <CategoryModel>[];
-
-  List<ArticleModel> articles = <ArticleModel>[];
-  bool _loading = true;
-
-  getNews() async {
-    NewsServices newsServices = NewsServices();
-    await newsServices.getNews();
-    articles = newsServices.news;
-    setState(() {
-      _loading = false;
-    });
-  }
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    categoriess = categories;
-    getNews();
+    final provider = Provider.of<HomeControl>(context, listen: false);
+    provider.getNews();
   }
 
   @override
   Widget build(BuildContext context) {
+    final homeProvider = Provider.of<HomeControl>(context);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -55,45 +42,52 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ])),
       ),
-      body: _loading
-          ? Center(
-              child: Container(
+      body: homeProvider.loading
+          ? const Center(
+              child: SizedBox(
                 child: CircularProgressIndicator(),
               ),
-            ) //categories
+            )
           : SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Column(
                   children: [
+                    //categories section
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 7),
+                      padding: const EdgeInsets.symmetric(horizontal: 7),
                       height: 70,
                       child: ListView.builder(
-                        itemCount: categories.length,
+                        itemCount: imageCategories.length,
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
                           return CategoryTile(
-                            categoryName: categories[index].categoryName,
-                            imageUrl: categories[index].imageUrl,
+                            categoryName:
+                                imageCategories[index].categoryName.toString(),
+                            imageUrl:
+                                imageCategories[index].imageUrl.toString(),
                           );
                         },
                       ),
-                    ), //blog
-
+                    ),
+                    //blog article section
                     Container(
-                      padding: EdgeInsets.only(top: 16),
+                      padding: const EdgeInsets.only(top: 16),
                       child: ListView.builder(
-                        physics: ClampingScrollPhysics(),
+                        physics: const ClampingScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: articles.length,
+                        itemCount: homeProvider.articles.length,
                         itemBuilder: (context, index) {
                           return BlogTile(
-                            imageUrl: articles[index].urlToImage.toString(),
-                            title: articles[index].title.toString(),
-                            description: articles[index].description.toString(),
-                            url: articles[index].url.toString(),
+                            imageUrl: homeProvider.articles[index].urlToImage
+                                .toString(),
+                            title:
+                                homeProvider.articles[index].title.toString(),
+                            description: homeProvider
+                                .articles[index].description
+                                .toString(),
+                            url: homeProvider.articles[index].url.toString(),
                           );
                         },
                       ),

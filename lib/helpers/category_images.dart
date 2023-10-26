@@ -1,6 +1,6 @@
 import '../model/category_model.dart/categorymodel.dart';
 
-List<CategoryModel> categories = [
+List<CategoryModel> imageCategories = [
   CategoryModel(
     categoryName: 'business',
     imageUrl:
