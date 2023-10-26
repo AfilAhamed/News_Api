@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'NewsApp',
         theme: ThemeData(useMaterial3: true),
         home: const HomeScreen(),
         debugShowCheckedModeBanner: false,
